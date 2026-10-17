@@ -1,0 +1,12 @@
+{
+  "id": 8172503,
+  "title": "Abuse Research Engineer",
+  "location": { "name": "Remote from the US" },
+  "absolute_url": "https://stripe.com/jobs/search?gh_jid=8172503",
+  "updated_at": "2026-10-07T19:02:27-04:00",
+  "first_published": "2026-09-09T10:52:09-04:00",
+  "pay_input_ranges": [
+    { "min_cents": 18000000, "max_cents": 26000000, "currency_type": "USD", "title": "SF / NYC", "blurb": "Base salary range" },
+    { "min_cents": 15000000, "max_cents": 22000000, "currency_type": "USD", "title": "US Remote", "blurb": "Base salary range" }
+  ]
+}

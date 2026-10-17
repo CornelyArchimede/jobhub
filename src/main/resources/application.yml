@@ -14,6 +14,15 @@ spring:
       # Keep Postgres running between restarts; data lives in the named volume.
       lifecycle-management: start-only
 
+jobhub:
+  greenhouse:
+    base-url: https://boards-api.greenhouse.io/v1
+    connect-timeout: 2s
+    read-timeout: 10s
+    # One extra detail call per job to read pay ranges (N+1). Turn off for boards that publish no pay.
+    fetch-pay: true
+    pay-concurrency: 8
+
 management:
   endpoints:
     web:

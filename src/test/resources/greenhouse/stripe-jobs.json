@@ -1,0 +1,56 @@
+{
+  "jobs": [
+    {
+      "absolute_url": "https://stripe.com/jobs/search?gh_jid=8172503",
+      "data_compliance": [{ "type": "gdpr", "requires_consent": false, "retention_period": null }],
+      "internal_job_id": 7012345,
+      "location": { "name": "Remote from the US" },
+      "metadata": null,
+      "id": 8172503,
+      "updated_at": "2026-10-07T19:02:27-04:00",
+      "requisition_id": "SEC-1042",
+      "title": "Abuse Research Engineer",
+      "company_name": "Stripe",
+      "first_published": "2026-09-09T10:52:09-04:00",
+      "language": "en",
+      "content": "&lt;h2&gt;&lt;strong&gt;Who we are&lt;/strong&gt;&lt;/h2&gt;\n&lt;p&gt;Stripe is a financial infrastructure platform for businesses.&lt;/p&gt;\n&lt;h3&gt;What you'll do&lt;/h3&gt;\n&lt;ul&gt;&lt;li&gt;Partner with R&amp;amp;D on abuse detection&lt;/li&gt;&lt;li&gt;Ship &lt;span style=&quot;font-weight: 400;&quot;&gt;production&lt;/span&gt; models&lt;/li&gt;&lt;/ul&gt;",
+      "departments": [{ "id": 8611, "name": "Security Analytics", "child_ids": [], "parent_id": null }],
+      "offices": [{ "id": 1, "name": "US Remote", "location": "United States" }]
+    },
+    {
+      "absolute_url": "https://stripe.com/jobs/search?gh_jid=8241288",
+      "data_compliance": [],
+      "internal_job_id": 7012346,
+      "location": { "name": "US - Hybrid" },
+      "metadata": null,
+      "id": 8241288,
+      "updated_at": "2026-10-07T19:02:27-04:00",
+      "requisition_id": "SEC-1077",
+      "title": "Security GRC Program Manager, Third Party Risk",
+      "company_name": "Stripe",
+      "first_published": "2026-10-06T06:58:35-04:00",
+      "language": "en",
+      "content": "&lt;p&gt;Own third-party risk reviews.&lt;/p&gt;",
+      "departments": [{ "id": 8614, "name": "Office of the CISO", "child_ids": [], "parent_id": null }],
+      "offices": []
+    },
+    {
+      "absolute_url": "https://stripe.com/jobs/search?gh_jid=8172508",
+      "data_compliance": [],
+      "internal_job_id": 7012347,
+      "location": { "name": "Dublin" },
+      "metadata": null,
+      "id": 8172508,
+      "updated_at": "2026-10-07T19:02:27-04:00",
+      "requisition_id": "SEC-1043",
+      "title": "Abuse Investigator",
+      "company_name": "Stripe",
+      "first_published": "2026-09-03T13:32:53-04:00",
+      "language": "en",
+      "content": "&lt;p&gt;Investigate platform abuse.&lt;/p&gt;",
+      "departments": [{ "id": 8611, "name": "Security Analytics", "child_ids": [], "parent_id": null }],
+      "offices": [{ "id": 2, "name": "Dublin", "location": "Dublin, Ireland" }]
+    }
+  ],
+  "meta": { "total": 3 }
+}

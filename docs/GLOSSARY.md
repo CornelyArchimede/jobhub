@@ -22,6 +22,19 @@ Rolling list of terms and technologies that come up while building Job Hub. Adde
 | Compose `start-only` lifecycle | Boot starts the Compose services if they aren't running but never stops them on shutdown, so Postgres stays up between app runs. | `spring.docker.compose.lifecycle-management` |
 | WSL2 | Windows Subsystem for Linux: a real Linux kernel in a lightweight VM. Docker Desktop on Windows runs its engine inside it. | Docker prerequisite |
 | Health indicator | One check that contributes to `/actuator/health` (e.g. `db` runs a validation query). Overall status is the worst of all indicators. | `/actuator/health` |
+| `RestClient` | Spring's synchronous, fluent HTTP client (successor to `RestTemplate`): `restClient.get().uri(...).retrieve().body(T.class)`. | `GreenhouseConfig`, `GreenhouseClient` |
+| `MockRestServiceServer` | Test double that plugs into a `RestClient.Builder`, checks each outgoing request against expectations, and returns canned responses. No real network. | `GreenhouseClientTest` |
+| `ExpectedCount` | How many times `MockRestServiceServer` expects a request: `once()`, `between(1, 2)`, `never()`. Used to pin retry behavior. | `GreenhouseClientTest` |
+| `@ConfigurationProperties` | Binds a prefix of `application.yml` (e.g. `jobhub.greenhouse.*`) to a typed record, so config is validated and type-safe instead of scattered `@Value`s. | `GreenhouseProperties` |
+| `@WebMvcTest` | Test slice that starts only the web layer (controllers, advice, JSON) with no DB; collaborators are replaced with `@MockitoBean`. | `DevPreviewControllerTest` |
+| `MockMvcTester` | AssertJ-style API for `MockMvc`: `assertThat(mvc.get().uri(...)).hasStatusOk().bodyJson()...`. | `DevPreviewControllerTest` |
+| ProblemDetail (RFC 9457) | Standard JSON error body (`type`, `title`, `status`, `detail` + extras) served as `application/problem+json`. | `ApiExceptionHandler` |
+| HTML entities | Escaped characters like `&lt;` for `<` and `&amp;` for `&`. Greenhouse escapes its whole HTML description, so it has to be unescaped *then* stripped. | `GreenhouseClient.htmlToText` |
+| jsoup | Java HTML parser; `Jsoup.parse(html).text()` unescapes entities and drops tags. | `GreenhouseClient.htmlToText` |
+| N+1 calls | One call to list N items, then one more call per item. Cost grows with N; the classic fix is batching, the fallback is bounded concurrency. | Pay fetch |
+| Bounded concurrency / `Semaphore` | Run work in parallel but cap how many are in flight; a `Semaphore(n)` hands out n permits. Protects the remote API and you. | Pay fan-out |
+| Virtual threads | Lightweight JVM threads (Java 21+): cheap to create by the thousand, ideal for blocking I/O like HTTP calls. `Executors.newVirtualThreadPerTaskExecutor()`. | Pay fan-out |
+| `@Retryable` (Spring 7) | Built-in retry annotation in Spring Framework 7 (`org.springframework.resilience`), enabled with `@EnableResilientMethods`. One option for "one retry max". | `GreenhouseClient` (your choice) |
 | `--force-with-lease` | A force push that only goes through if the remote branch is still at the commit you expect, so you can't clobber someone else's push. | Rewriting the M0 commit |
 
 ## Technologies to learn
@@ -35,6 +48,9 @@ What's coming, roughly in milestone order. ✅ once you've used it hands-on.
 | Testcontainers | M0 ✅ | |
 | Docker / Compose basics | M0 ✅ | Images, containers, volumes, ports |
 | Spring `RestClient` | M1 | Synchronous HTTP client; timeouts + retry |
+| `MockRestServiceServer`, `@WebMvcTest` | M1 | Testing HTTP clients and controllers without a network or DB |
+| Virtual threads + `Semaphore` | M1 | Bounded-concurrency pay fan-out |
+| jsoup | M1 | HTML → plain text |
 | Greenhouse Job Board API | M1 | Public, unauthenticated JSON |
 | Postgres `INSERT ... ON CONFLICT` (upsert) | M2 | Idempotent ingest |
 | Content hashing for change detection | M2 | `content_hash` decides rescoring |

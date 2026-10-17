@@ -1,0 +1,2 @@
+-- V1: baseline. Intentionally empty; tables arrive in M2 (V2+).
+-- Migrations are append-only: never edit a merged V*.sql, add a new one.

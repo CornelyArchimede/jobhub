@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: jobhub
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  cache:
+    type: caffeine
+  docker:
+    compose:
+      # Keep Postgres running between restarts; data lives in the named volume.
+      lifecycle-management: start-only
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

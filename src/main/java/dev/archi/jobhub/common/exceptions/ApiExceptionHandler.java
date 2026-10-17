@@ -8,12 +8,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
  * Maps exceptions to RFC 9457 problem+json responses.
+ *
+ * <p>Extends ResponseEntityExceptionHandler so Spring MVC's own exceptions (unknown
+ * path, wrong method, bad parameter) keep their 404/405/400 instead of hitting the
+ * catch-all below.
  */
 @RestControllerAdvice
-class ApiExceptionHandler {
+class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
 
@@ -29,9 +34,11 @@ class ApiExceptionHandler {
 	/** The ATS failed (5xx, timeout, bad payload): their problem, not the caller's. */
 	@ExceptionHandler
 	ProblemDetail upstreamFailure(AtsUnavailableException ex) {
-		log.warn("Upstream ATS call failed: {}", ex.getMessage());
+		log.warn("Upstream ATS call failed: {}", ex.getMessage(), ex);
 		ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_GATEWAY, ex.getMessage());
 		problem.setTitle("Upstream failure");
+		problem.setProperty("atsType", ex.atsType());
+		problem.setProperty("boardToken", ex.boardToken());
 		return problem;
 	}
 

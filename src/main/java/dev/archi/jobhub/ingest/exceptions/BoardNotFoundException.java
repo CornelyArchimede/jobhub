@@ -1,8 +1,9 @@
 package dev.archi.jobhub.ingest.exceptions;
 
+import dev.archi.jobhub.common.exceptions.JobHubException;
 import dev.archi.jobhub.company.AtsType;
 
-public class BoardNotFoundException extends RuntimeException {
+public class BoardNotFoundException extends JobHubException {
 
 	private final AtsType atsType;
 

@@ -16,6 +16,13 @@ Rolling list of terms and technologies that come up while building Job Hub. Adde
 | Open Session in View (OSIV) | Spring default that keeps the JPA session open during view rendering so lazy loads "just work"; hides N+1 queries. Turned off. | `application.yml` |
 | Maven wrapper (`mvnw`) | Script that downloads a pinned Maven version, so everyone builds with the same Maven without installing it. | `mvnw`, `.mvn/wrapper/` |
 | Modular starters (Boot 4) | Boot 4 split auto-config into per-technology modules, e.g. `spring-boot-starter-flyway`, `-webmvc`, each with a matching `-test` starter. | `pom.xml` |
+| Spring Initializr | start.spring.io: generates a Boot project skeleton (pom, wrapper, main class) for chosen versions and dependencies. | How M0 was scaffolded |
+| Container vs image | An image is the read-only template (`postgres:17`); a container is a running instance of it. Many containers can come from one image. | `compose.yaml`, Testcontainers |
+| Named volume | Docker-managed storage that outlives the container, so data survives restarts and `docker compose down` (but not `down -v`). | `pgdata` in `compose.yaml` |
+| Compose `start-only` lifecycle | Boot starts the Compose services if they aren't running but never stops them on shutdown, so Postgres stays up between app runs. | `spring.docker.compose.lifecycle-management` |
+| WSL2 | Windows Subsystem for Linux: a real Linux kernel in a lightweight VM. Docker Desktop on Windows runs its engine inside it. | Docker prerequisite |
+| Health indicator | One check that contributes to `/actuator/health` (e.g. `db` runs a validation query). Overall status is the worst of all indicators. | `/actuator/health` |
+| `--force-with-lease` | A force push that only goes through if the remote branch is still at the commit you expect, so you can't clobber someone else's push. | Rewriting the M0 commit |
 
 ## Technologies to learn
 
@@ -23,9 +30,10 @@ What's coming, roughly in milestone order. ✅ once you've used it hands-on.
 
 | Technology / concept | First milestone | Notes |
 |----------------------|-----------------|-------|
-| Spring Boot 4 / Spring Framework 7 | M0 | |
-| Flyway migrations | M0 | |
-| Testcontainers | M0 | |
+| Spring Boot 4 / Spring Framework 7 | M0 ✅ | |
+| Flyway migrations | M0 ✅ | |
+| Testcontainers | M0 ✅ | |
+| Docker / Compose basics | M0 ✅ | Images, containers, volumes, ports |
 | Spring `RestClient` | M1 | Synchronous HTTP client; timeouts + retry |
 | Greenhouse Job Board API | M1 | Public, unauthenticated JSON |
 | Postgres `INSERT ... ON CONFLICT` (upsert) | M2 | Idempotent ingest |

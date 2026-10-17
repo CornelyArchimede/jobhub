@@ -1,4 +1,4 @@
-package dev.archi.jobhub.ingest;
+package dev.archi.jobhub.ingest.exceptions;
 
 import dev.archi.jobhub.company.AtsType;
 

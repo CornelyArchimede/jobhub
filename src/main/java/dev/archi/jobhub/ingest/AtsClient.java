@@ -3,6 +3,7 @@ package dev.archi.jobhub.ingest;
 import java.util.List;
 
 import dev.archi.jobhub.company.AtsType;
+import dev.archi.jobhub.ingest.exceptions.BoardNotFoundException;
 
 /**
  * Fetches every open posting on one company's job board and normalizes it.

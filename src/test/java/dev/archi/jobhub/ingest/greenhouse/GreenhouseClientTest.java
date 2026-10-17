@@ -17,7 +17,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
-import dev.archi.jobhub.ingest.BoardNotFoundException;
+import dev.archi.jobhub.ingest.exceptions.BoardNotFoundException;
 import dev.archi.jobhub.ingest.NormalizedJob;
 import dev.archi.jobhub.ingest.RemoteType;
 import dev.archi.jobhub.ingest.greenhouse.GreenhouseJobsResponse.PayInputRange;

@@ -27,7 +27,7 @@ class DevPreviewController {
 	@Operation(summary = "Fetch and normalize a Greenhouse board (no DB)")
 	@GetMapping("/{boardToken}")
 	List<NormalizedJob> preview(@PathVariable String boardToken) {
-		return this.greenhouseClient.fetchJobs(boardToken);
+		return greenhouseClient.fetchJobs(boardToken);
 	}
 
 }

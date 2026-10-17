@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.util.List;
 
 import dev.archi.jobhub.company.AtsType;
+import dev.archi.jobhub.ingest.exceptions.BoardNotFoundException;
 import dev.archi.jobhub.ingest.greenhouse.GreenhouseClient;
 import org.junit.jupiter.api.Test;
 

@@ -42,3 +42,22 @@ _TBD (M5). Include `EXPLAIN ANALYZE` before/after._
 ## Caching
 
 _TBD (M7)._
+
+## Vision and scale path
+
+**Goal beyond v1:** resume + current/target title + preferences (salary, location, work style) → every matching job across many companies and ATSes, ranked, with a sensitivity threshold.
+
+**Coverage is a list, not a search.** Greenhouse, Lever and Ashby only answer "this company's board"; there is no global endpoint or directory. So "search everything" = ingest a large list of board tokens. Sources: public lists of ATS boards, harvesting `boards.greenhouse.io/<token>` links, and a resolver that tries a company name as a token on each ATS. Expect dead tokens: validate on import, log and skip at ingest.
+
+| Pressure at ~thousands of boards | Answer in this design |
+|---|---|
+| Volume (Stripe alone ≈ 5.7 MB/pull) | Staggered schedule; idempotent upsert + `content_hash` so unchanged jobs cost a no-op (M2) |
+| Pay is N+1 (one call per job) | `fetch-pay` off at scale, or only fetch pay for jobs above a score threshold |
+| One bad board must not stop the run | Log-and-skip per board (M3), per job for pay (M1) |
+| Politeness / rate limits | Bounded concurrency, one retry max, backoff before widening |
+| Search over millions of rows | Composite indexes + keyset pagination, verified with `EXPLAIN ANALYZE` (M5) |
+| "How loose a match?" | Minimum-score filter on the read API = the sensitivity meter (M5) |
+
+**Matching:** v1 uses a hand-written rubric in `application.yml`. v2 derives the rubric from the resume + preferences. Because `Scorer` is a pure function of (`NormalizedJob`, `Rubric`), only the rubric's *source* changes.
+
+**Curated list vs crawling (interview angle):** a curated list is cheap, polite and predictable but only as complete as the list; crawling buys coverage at the cost of discovery, deduplication, rate limits and terms-of-service risk.

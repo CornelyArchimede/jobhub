@@ -16,6 +16,10 @@ Rolling list of terms and technologies that come up while building Job Hub. Adde
 | Open Session in View (OSIV) | Spring default that keeps the JPA session open during view rendering so lazy loads "just work"; hides N+1 queries. Turned off. | `application.yml` |
 | Maven wrapper (`mvnw`) | Script that downloads a pinned Maven version, so everyone builds with the same Maven without installing it. | `mvnw`, `.mvn/wrapper/` |
 | Modular starters (Boot 4) | Boot 4 split auto-config into per-technology modules, e.g. `spring-boot-starter-flyway`, `-webmvc`, each with a matching `-test` starter. | `pom.xml` |
+| ATS (Applicant Tracking System) | Software companies use to post jobs and manage applicants (Greenhouse, Lever, Ashby, Workday). Each has its own public job-board API. | `ingest/`, `AtsType` |
+| Board token | A company's ID on an ATS: the path segment in `boards.greenhouse.io/<token>`. Every board API call needs it; there's no global list of them. | `/dev/preview/{boardToken}`, M3 watchlist |
+| Sensitivity threshold | The minimum score a job needs to show up in results. Lower = looser matches. | M4 scoring / M5 read API |
+| Curated list vs crawl | Ingesting a known list of sources vs discovering sources automatically. Trade completeness for cost, politeness and predictability. | DESIGN.md "Vision and scale path" |
 | Spring Initializr | start.spring.io: generates a Boot project skeleton (pom, wrapper, main class) for chosen versions and dependencies. | How M0 was scaffolded |
 | Container vs image | An image is the read-only template (`postgres:17`); a container is a running instance of it. Many containers can come from one image. | `compose.yaml`, Testcontainers |
 | Named volume | Docker-managed storage that outlives the container, so data survives restarts and `docker compose down` (but not `down -v`). | `pgdata` in `compose.yaml` |

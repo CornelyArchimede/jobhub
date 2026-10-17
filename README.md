@@ -52,14 +52,20 @@ Schema lives in hand-written Flyway migrations under `src/main/resources/db/migr
 ## Roadmap
 
 - [x] **M0** Scaffold: app boots, Postgres via Compose, Flyway, health, Swagger UI
-- [ ] **M1** Greenhouse client → preview normalized jobs for one board
+- [x] **M1** Greenhouse client → preview normalized jobs for one board
 - [ ] **M2** Persist postings with an idempotent upsert
-- [ ] **M3** Company watchlist, scheduled ingest, closed-posting detection, Lever client
-- [ ] **M4** Rubric-based scoring with a JSON score breakdown
-- [ ] **M5** Read API: filters, keyset pagination, indexes (with `EXPLAIN ANALYZE`)
+- [ ] **M3** Company watchlist with bulk token import, scheduled ingest, closed-posting detection, Lever client
+- [ ] **M4** Rubric-based scoring (title, salary, location, work style) with a JSON score breakdown
+- [ ] **M5** Read API: filters incl. a minimum-score "sensitivity" threshold, keyset pagination, indexes (with `EXPLAIN ANALYZE`)
 - [ ] **M6** Application pipeline with validated status transitions
 - [ ] **M7** Caffeine caching on hot queries
 - [ ] **M8** Design write-up
+
+## Where it's going
+
+The long-term goal: hand it a resume, current and target title, and preferences (salary, location, remote/hybrid/onsite), and get back every matching job across many companies and ATSes, ranked by fit, with a sensitivity setting for how loose a match to include.
+
+No ATS offers a global search, so coverage comes from a large list of company board tokens fed into the same ingest pipeline v1 builds. v1 scores against a hand-written rubric; deriving that rubric from a resume is the next step. See [docs/DESIGN.md](docs/DESIGN.md#vision-and-scale-path) for how today's decisions leave room for it.
 
 ## Docs
 

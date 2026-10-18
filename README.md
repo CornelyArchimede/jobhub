@@ -61,6 +61,16 @@ Schema lives in hand-written Flyway migrations under `src/main/resources/db/migr
 - [ ] **M7** Caffeine caching on hot queries
 - [ ] **M8** Design write-up
 
+## What makes this different
+
+Most AI job tools optimize for volume: auto-apply to hundreds of postings and hope. Job Hub is built for the opposite.
+
+- **Human in the loop.** It ranks and explains; you decide and apply yourself. Fewer, better-aimed applications, none of them bot-submitted.
+- **Transparent scoring.** The rubric is explicit and weighted (stack, level and years asked, pay vs target, odds and logistics). A score comes with a breakdown you can check and disagree with, not a black-box "87% match".
+- **Personal context, not just keywords.** Scoring can use what generic matchers can't see: former employers, past interview loops, known skill gaps, commute.
+- **A search strategy, not a single list.** Roles fall into tiers (apply today / worth it / safety net) so the search is planned across risk and timeline.
+- **Tracks everything you apply to.** Applications logged from anywhere (LinkedIn included) live alongside ingested postings and outlast them.
+
 ## Where it's going
 
 The long-term goal: hand it a resume, current and target title, and preferences (salary, location, remote/hybrid/onsite), and get back every matching job across many companies and ATSes, ranked by fit, with a sensitivity setting for how loose a match to include.

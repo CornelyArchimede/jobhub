@@ -61,3 +61,34 @@ _TBD (M7)._
 **Matching:** v1 uses a hand-written rubric in `application.yml`. v2 derives the rubric from the resume + preferences. Because `Scorer` is a pure function of (`NormalizedJob`, `Rubric`), only the rubric's *source* changes.
 
 **Curated list vs crawling (interview angle):** a curated list is cheap, polite and predictable but only as complete as the list; crawling buys coverage at the cost of discovery, deduplication, rate limits and terms-of-service risk.
+
+## v3: multi-user personalization (brainstorm, not planned)
+
+Goal: give thousands of people the same personal ranking, "why" lines and tiers that v1 gives one person.
+
+**Split shared from personal.**
+
+| Shared: computed once per job | Personal: per user |
+|---|---|
+| Ingested postings (a board is the same for everyone) | Profile: skills, years, level, past employers, known gaps |
+| Normalized fields: pay, location, remote type | Preferences: pay floor, locations, work style |
+| Job category (bank, fintech, contract, gov, ...) | Score + breakdown per job |
+| Interview intel per category | History: applied, interviewed, rejected, skipped |
+
+Ingest cost scales with boards (deduplicated across users). Scoring cost scales with **jobs × users**: the hard part.
+
+**Personal insights become generic rules over profile fields.** "ex-JPM helps" → boost when the company is in `profile.pastEmployers`. "React is your gap" → penalty when the job needs something in `profile.gaps`. "You've done their loop" → rule over `history`. Tabs generalize too: "Top picks" = score ≥ the user's threshold; "Senior" / "Mid" = job level relative to the user's level.
+
+**Scaling jobs × users.**
+1. Hard filters first, in SQL (location, pay floor, work style) so most pairs are never scored. Indexed (M5).
+2. Incremental scoring: a new/changed job (`content_hash`) is scored only for users whose filters it passes; a changed profile rescores only that user (`rubric_version` per user).
+3. Store each user's top N, not the full jobs × users matrix.
+4. Interview angle: this is the **news-feed fan-out problem**. Fan-out on write precomputes each user's list when a job lands; fan-out on read scores when the user opens the page. Real systems mix both.
+
+**"Why" lines.** Template text built from the score breakdown is cheap, deterministic and works for everyone. LLM-written text is richer but too expensive across jobs × users, so use it only for each user's top 10–20, and cache it. Resume → profile is a one-time LLM extraction per user, confirmed by the user.
+
+**Learning from behavior.** Applies, skips and thumbs-down can tune each user's weights (learning-to-rank). `application_event` already collects the signal.
+
+**What multi-user adds:** authentication, per-user data isolation, resumes as sensitive personal data, and cost per user. All out of scope for v1.
+
+**The one v1 decision that would block this:** `job_score` keyed on `job_id` alone allows one score per job. Multi-user needs `(profile_id, job_id)`. Decide in M4; adding `profile_id` now (with a single profile) is nearly free and avoids a painful migration later.
